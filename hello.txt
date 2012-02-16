@@ -1,0 +1,2 @@
+God wrote in Lisp
+
