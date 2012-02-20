@@ -1,2 +1,2 @@
-God wrote in Lisp
+God wrote in Lisp.
 
