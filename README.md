@@ -1,5 +1,10 @@
-Heroku buildpack: Hello
+Heroku buildpack: CL
 =======================
+
+Attempt at a buildpack for Common Lisp (using OpenMCL). Work in progress.
+
+
+
 
 This is an example [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks).
 

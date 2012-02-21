@@ -1,16 +1,61 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
 
-indent() {
-  sed -u 's/^/       /'
+mktmpdir() {
+  dir=$(mktemp -t node-$1-XXXX)
+  rm -rf $dir
+  mkdir -p $dir
+  echo $dir
+}
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
 }
 
-echo "-----> Found a hello.txt"
+S3_BUCKET="cl-heroku"
+CCL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
 
-# if hello.txt is empty, abort the build
-if [ ! -s $1/hello.txt ]; then
-  echo "hello.txt was empty" | indent
-  exit 1
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+CACHE_QUICKLISP_DIR="$CACHE_DIR/quicklisp/" 
+BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
+
+CCL_DIR="$(mktmpdir ccl)"
+
+# don't we only want to do this if not there?
+echo "-----> Fetching ccl"
+mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
+
+# add to slug 
+cp -r $CCL_DIR $BUILD_DIR/ccl 
+
+echo echo "ccl installed" | indent
+
+# setting up paths for building
+
+# unpack existing cache
+# nodejs is more elaborate; this ought work
+if [ -d $CACHE_QUICKLISP_DIR ]; then
+
+    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
+
 fi
 
-# replace hello with goodbye in a new file
-cat $1/hello.txt | sed -e "s/[Hh]ello/Goodbye/g" > $1/goodbye.txt
+echo "-----> Installing dependencies with quicklisp"
+
+# run lisp to load quicklisp packages
+ccl/scripts/ccl -l compile.lisp
+
+echo "dependencies installed" | indent
+  
+# copy quicklisp back to cache
+if [ -d $CACHE_QUICKLISP_DIR ]; then
+
+    rm -rf $CACHE_QUICKLISP_DIR
+    cp -r $BUILD_QUICKLISP_DIR $CACHE_QUICKLISP_DIR
+
+fi
