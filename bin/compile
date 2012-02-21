@@ -28,7 +28,7 @@ CCL_DIR="$CACHE_DIR/ccl"
 
 echo "-----> Installing ccl"
 # don't we only want to do this if not there?
-if [ ! -d $CCL_DIR ];
+if [ ! -d $CCL_DIR ]; then
     echo "-----> Fetching ccl"
     mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
 fi
