@@ -26,9 +26,12 @@ BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
 
 CCL_DIR="$CACHE_DIR/ccl"
 
+echo "-----> Installing ccl"
 # don't we only want to do this if not there?
-echo "-----> Fetching ccl"
-mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
+if [ ! -d $CCL_DIR ];
+    echo "-----> Fetching ccl"
+    mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
+fi
 
 # add to slug 
 cp -r $CCL_DIR $BUILD_DIR/ccl 
@@ -37,13 +40,6 @@ echo "ccl installed" | indent
 
 # setting up paths for building
 
-# unpack existing cache
-# nodejs is more elaborate; this ought work
-if [ -d $CACHE_QUICKLISP_DIR ]; then
-
-    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
-
-fi
 
 echo "-----> Getting patched versions of libraries"
 # get patched aserve
@@ -60,6 +56,9 @@ fi
 
 export CACHE_DIR
 
+# add to slug 
+cp -r $CACHE_DIR/repos $BUILD_DIR/repos 
+
 echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
@@ -69,10 +68,7 @@ $CCL_DEFAULT_DIRECTORY/scripts/ccl -l "setup/compile.lisp"
 
 echo "dependencies installed" | indent
   
-# copy quicklisp back to cache
+# copy quicklisp to slug
 if [ -d $CACHE_QUICKLISP_DIR ]; then
-
-    rm -rf $CACHE_QUICKLISP_DIR
-    cp -r $BUILD_QUICKLISP_DIR $CACHE_QUICKLISP_DIR
-
+    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
 fi

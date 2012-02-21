@@ -6,32 +6,34 @@
 
 ;;; Standard
 
-(defvar *app-home* (butlast (pathname-directory *load-pathname*)))
+(defvar *app-dir* (butlast (pathname-directory *load-pathname*)))
 
-(defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
+;;; Overridden by compile.lisp
+(defvar *cache-dir* nil)
+
+(defvar *quicklisp-home* 
+  (append (or *cache-dir* *app-dir*)  '("quicklisp")))
 
 (require :asdf)
 
-
-
-(if (probe-file (make-pathname :directory (append *app-home* '("quicklisp")) :defaults "setup.lisp"))
-    (load (make-pathname :directory (append *app-home* '("quicklisp")) :defaults "setup.lisp"))
+(if (probe-file (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
+    (load (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
     (progn
-      (load (make-pathname :directory (append *app-home* '("lib")) :defaults "quicklisp.lisp"))
-;      (quicklisp-quickstart:install :path (make-pathname :directory (append *app-home* '("quicklisp"))))
+      (load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
+;      (quicklisp-quickstart:install :path (make-pathname :directory (append *app-dir* '("quicklisp"))))
       (funcall (symbol-function (find-symbol "INSTALL" (find-package "QUICKLISP-QUICKSTART")))
-	       :path (make-pathname :directory (append *app-home* '("quicklisp"))))	       
+	       :path (make-pathname :directory *quicklisp-home*))	       
       ))
 
 (asdf:clear-system "acl-compat")
 
-(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "acl-compat"))
+(load (make-pathname :directory (append *app-dir* '("repos" "portableaserve" "acl-compat"))
 		     :defaults "acl-compat.asd"))
-(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "aserve"))
+(load (make-pathname :directory (append *app-dir* '("repos" "portableaserve" "aserve"))
 		     :defaults "aserve.asd"))
 
 ;(asdf:operate 'asdf:load-op "acl-compat")
 
-(load (make-pathname :directory *app-home* :name *app-name* :type "asd"))
+(load (make-pathname :directory *app-dir* :name *app-name* :type "asd"))
 
 
