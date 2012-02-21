@@ -8,10 +8,11 @@
 
 (defvar *app-home* (butlast (pathname-directory *load-pathname*)))
 
+(defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
+
 (require :asdf)
 
-(load (make-pathname :directory (append *app-home* '("repos" "portableaserve" "aserve"))
-		     :defaults "aserve.asd"))
+
 
 (if (probe-file (make-pathname :directory (append *app-home* '("quicklisp")) :defaults "setup.lisp"))
     (load (make-pathname :directory (append *app-home* '("quicklisp")) :defaults "setup.lisp"))
@@ -22,6 +23,14 @@
 	       :path (make-pathname :directory (append *app-home* '("quicklisp"))))	       
       ))
 
+(asdf:clear-system "acl-compat")
+
+(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "acl-compat"))
+		     :defaults "acl-compat.asd"))
+(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "aserve"))
+		     :defaults "aserve.asd"))
+
+;(asdf:operate 'asdf:load-op "acl-compat")
 
 (load (make-pathname :directory *app-home* :name *app-name* :type "asd"))
 
