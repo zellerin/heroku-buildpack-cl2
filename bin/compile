@@ -24,7 +24,7 @@ CACHE_DIR=$2
 CACHE_QUICKLISP_DIR="$CACHE_DIR/quicklisp/" 
 BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
 
-CCL_DIR="$(mktmpdir ccl)"
+CCL_DIR="$CACHE_DIR/ccl"
 
 # don't we only want to do this if not there?
 echo "-----> Fetching ccl"
@@ -48,7 +48,7 @@ fi
 echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
-ccl/scripts/ccl -l compile.lisp
+$BUILD_DIR/ccl/scripts/ccl -l compile.lisp
 
 echo "dependencies installed" | indent
   
