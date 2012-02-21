@@ -33,7 +33,7 @@ mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
 # add to slug 
 cp -r $CCL_DIR $BUILD_DIR/ccl 
 
-echo echo "ccl installed" | indent
+echo "ccl installed" | indent
 
 # setting up paths for building
 
@@ -48,7 +48,8 @@ fi
 echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
-$BUILD_DIR/ccl/scripts/ccl -l compile.lisp
+CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
+$CCL_DEFAULT_DIRECTORY/scripts/ccl -l compile.lisp
 
 echo "dependencies installed" | indent
   
