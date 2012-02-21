@@ -45,7 +45,7 @@ if [ -d $CACHE_QUICKLISP_DIR ]; then
 
 fi
 
-echo "-----> "Getting patched versions of libraries"
+echo "-----> Getting patched versions of libraries"
 # get patched aserve
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
     pushd $CACHE_DIR/repos/portableaserve
