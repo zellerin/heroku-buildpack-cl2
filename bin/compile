@@ -45,11 +45,24 @@ if [ -d $CACHE_QUICKLISP_DIR ]; then
 
 fi
 
+echo "-----> "Getting patched versions of libraries"
+# get patched aserve
+if [ -d $CACHE_DIR/repos/portableaserve ]; then
+    pushd $CACHE_DIR/repos/portableaserve
+    git pull
+    popd
+else 
+    pushd $CACHE_DIR/repos
+    git clone git://github.com/mtravers/portableaserve.git
+    popd
+fi
+
 echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
-CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
-$CCL_DEFAULT_DIRECTORY/scripts/ccl -l compile.lisp
+export CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
+# should run from build -- but is source tree there?
+$CCL_DEFAULT_DIRECTORY/scripts/ccl -l setup/compile.lisp
 
 echo "dependencies installed" | indent
   
