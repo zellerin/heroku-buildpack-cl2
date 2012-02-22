@@ -7,5 +7,5 @@
 (let ((port (or (ignore-errors (parse-integer (getenv "PORT")))
 			    3000)))
   (format "~%Listening on port ~A" port)
-  (net.aserve:start :port))
+  (net.aserve:start :port port))
 
