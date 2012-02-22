@@ -26,6 +26,8 @@ BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
 
 CCL_DIR="$CACHE_DIR/ccl"
 
+echo "-----> compile params: $BUILD_DIR $CACHE_DIR
+
 echo "-----> Installing ccl"
 # don't we only want to do this if not there?
 if [ ! -d $CCL_DIR ]; then
@@ -34,7 +36,7 @@ if [ ! -d $CCL_DIR ]; then
 fi
 
 # add to slug 
-cp -r $CCL_DIR $BUILD_DIR/ccl 
+cp -r $CCL_DIR $BUILD_DIR
 
 echo "ccl installed" | indent
 
