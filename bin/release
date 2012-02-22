@@ -8,7 +8,7 @@ addons:
   - shared-database:5mb
 config_vars:
   PATH: bin:/usr/bin:/bin
-  CCL_DEFAULT_DIRECTORY: ccl  
+  CCL_DEFAULT_DIRECTORY: ccl
 default_process_types:
-  web: ccl/scripts/ccl64 -l setup/run.lisp
+  web: setup/launch -l setup/run.lisp
 EOF

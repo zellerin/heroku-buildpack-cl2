@@ -1,0 +1,6 @@
+#!/bin/sh
+# based on ccl/scripts/ccl64, which is too stupid to figure out where it is being run from
+
+export CCL_DEFAULT_DIRECTORY=$PWD/ccl
+OPENMCL_KERNEL=lx86cl64
+exec ${CCL_DEFAULT_DIRECTORY}/${OPENMCL_KERNEL} "$@"

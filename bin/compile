@@ -46,10 +46,11 @@ echo "-----> Getting patched versions of libraries"
 # get patched aserve
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
     pushd $CACHE_DIR/repos/portableaserve
-    echo "-->DEBUG ls aserve dir "
-    pwd
-    ls -la
-    git pull
+# not sure why I am getting errors here -- added explicit remote/branch
+#    echo "-->DEBUG ls aserve dir "
+#    pwd
+#    ls -la
+    git pull origin master
     popd
 else 
     mkdir $CACHE_DIR/repos
