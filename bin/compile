@@ -71,8 +71,10 @@ cp -r $CACHE_DIR/repos $BUILD_DIR/repos
 echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
-export CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
-# should run from build -- but is source tree there?
+
+# this doesn't work for some mysterious reason
+# export CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
+export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 $CCL_DEFAULT_DIRECTORY/scripts/ccl -l "setup/compile.lisp"
 
 echo "dependencies installed" | indent
