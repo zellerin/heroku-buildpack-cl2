@@ -38,6 +38,9 @@ fi
 # add to slug 
 cp -r $CCL_DIR $BUILD_DIR
 
+echo "---> debug ls $CCL_DIR"
+ls -l $CCL_DIR
+
 echo "ccl installed" | indent
 
 # setting up paths for building
