@@ -4,6 +4,8 @@
 
 (ql:quickload *app-name*)
 
-(net.aserve:start :port (or (ignore-errors (parse-integer (getenv "PORT")))
-			    3000))
+(let ((port (or (ignore-errors (parse-integer (getenv "PORT")))
+			    3000)))
+  (format "~%Listening on port ~A" port)
+  (net.aserve:start :port))
 
