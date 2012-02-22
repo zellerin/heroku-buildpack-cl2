@@ -40,6 +40,10 @@ cp -r $CCL_DIR $BUILD_DIR
 
 echo "---> debug ls $CCL_DIR"
 ls -l $CCL_DIR
+echo "---> debug ls $BUILD_DIR"
+ls -l $BUILD_DIR
+echo "---> debug ls $BUILD_DIR/ccl"
+ls -l $BUILD_DIR/ccl
 
 echo "ccl installed" | indent
 
