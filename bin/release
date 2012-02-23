@@ -9,7 +9,6 @@ addons:
 config_vars:
   PATH: bin:/usr/bin:/bin
   CCL_DEFAULT_DIRECTORY: ccl
-  XDG_CACHE_HOME: xdg-cache
 default_process_types:
   web: setup/launch -b -l setup/run.lisp
 EOF

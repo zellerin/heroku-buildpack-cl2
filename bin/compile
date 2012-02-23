@@ -23,7 +23,6 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 # CACHE_QUICKLISP_DIR="$CACHE_DIR/quicklisp/" 
 # BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
-export XDG_CACHE_HOME="$CACHE_DIR/xdg-cache/"
 
 CCL_DIR="$CACHE_DIR/ccl"
 
@@ -69,16 +68,12 @@ echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
 
-export XDG_CACHE_HOME
 export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 $CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILD_DIR/setup/compile.lisp"
 
 echo "dependencies installed" | indent
   
 # copy quicklisp to slug
-#if [ -d $CACHE_QUICKLISP_DIR ]; then
-#    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
-#fi
-if [ -d $XDG_CACHE_HOME ]; then
-    cp -r $XDG_CACHE_HOME $BUILD_DIR
+if [ -d $CACHE_QUICKLISP_DIR ]; then
+    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
 fi

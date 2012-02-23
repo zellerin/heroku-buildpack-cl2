@@ -11,9 +11,17 @@ TODO
 - not sure caching is working
 
 TESTING
-> rm -rf /tmp/build
-> git clone -l . /tmp/build
-> mkdir /tmp/cache
-> ln -s /misc/repos/ccl /tmp/cache/ccl
-> cd /tmp/build
-> ./bin/compile
+
+Compile:
+rm -rf /tmp/build
+git clone -l . /tmp/build
+mkdir /tmp/cache
+ln -s /misc/repos/ccl /tmp/cache/ccl
+cd /tmp/build
+./bin/compile /tmp/build /tmp/cache
+
+Run:
+cd /tmp/build
+export CCL_DEFAULT_DIRECTORY=ccl
+setup/launch -b -l setup/run.lisp
+

@@ -11,10 +11,12 @@
 ;;; Overridden by compile.lisp
 (defvar *cache-dir* nil)
 
+(require :asdf)
+
 (defvar *quicklisp-home* 
   (append (or *cache-dir* *app-dir*)  '("quicklisp")))
 
-(require :asdf)
+(defvar asdf::*user-cache* (append *quicklisp-home* '(".cache" "common-lisp" :implementation)))
 
 (if (probe-file (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
     (load (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
