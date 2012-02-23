@@ -68,8 +68,7 @@ echo "-----> Installing dependencies with quicklisp"
 
 # run lisp to load quicklisp packages
 
-export CCL_DEFAULT_DIRECTORY=$BUILD_DIR/ccl  
-# export CCL_DEFAULT_DIRECTORY=$CCL_DIR
+export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 $CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILD_DIR/setup/compile.lisp"
 
 echo "dependencies installed" | indent
