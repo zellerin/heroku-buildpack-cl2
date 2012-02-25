@@ -19,9 +19,13 @@
 (defvar asdf::*user-cache* (append *quicklisp-home* '(".cache" "common-lisp" :implementation)))
 
 (if (probe-file (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
-    (load (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
+    (progn 
+      (load (make-pathname :directory *quicklisp-home* :defaults "setup.lisp")))
     (progn
       (load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
+      (print `(setting *[quicklisp-]home* ,*quicklisp-home*))
+      (set (find-symbol "*HOME*" (find-package "QUICKLISP-QUICKSTART")) *quicklisp-home*)
+      (set (find-symbol "*QUICKLISP-HOME*" (find-package "QUICKLISP-SETUP")) *quicklisp-home*)
 ;      (quicklisp-quickstart:install :path (make-pathname :directory (append *app-dir* '("quicklisp"))))
       (funcall (symbol-function (find-symbol "INSTALL" (find-package "QUICKLISP-QUICKSTART")))
 	       :path (make-pathname :directory *quicklisp-home*))	       

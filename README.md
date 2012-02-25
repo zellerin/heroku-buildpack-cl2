@@ -10,7 +10,7 @@ TODO
 - lots of random compile errors
 - not sure caching is working
 
-TESTING
+TESTING locally
 
 Compile:
 rm -rf /tmp/build
