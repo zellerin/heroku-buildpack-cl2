@@ -21,8 +21,6 @@ CCL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
 # parse and derive params
 BUILD_DIR=$1
 CACHE_DIR=$2
-# CACHE_QUICKLISP_DIR="$CACHE_DIR/quicklisp/" 
-# BUILD_QUICKLISP_DIR="$BUILD_DIR/quicklisp/"
 
 CCL_DIR="$CACHE_DIR/ccl"
 
@@ -75,6 +73,6 @@ $CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILD_DIR/setup/compile.lisp"
 echo "dependencies installed" | indent
   
 # copy quicklisp to slug
-if [ -d $CACHE_QUICKLISP_DIR ]; then
-    cp -r $CACHE_QUICKLISP_DIR $BUILD_QUICKLISP_DIR
+if [ -d $CACHE_DIR/quicklisp ]; then
+    cp -r $CACHE_DIR/quicklisp $BUILD_DIR/quicklisp
 fi

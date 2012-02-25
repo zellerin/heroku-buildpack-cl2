@@ -1,5 +1,6 @@
 #!/bin/sh
 # based on ccl/scripts/ccl64, which is too stupid to figure out where it is being run from or whether it is 32/64 bit
+# sets -no-init flag
 
 export CCL_DEFAULT_DIRECTORY=$PWD/ccl
 
@@ -31,4 +32,4 @@ if [ -z "$OPENMCL_KERNEL" ]; then
     esac
 fi
 
-exec ${CCL_DEFAULT_DIRECTORY}/${OPENMCL_KERNEL} "$@"
+exec ${CCL_DEFAULT_DIRECTORY}/${OPENMCL_KERNEL} --no-init "$@"

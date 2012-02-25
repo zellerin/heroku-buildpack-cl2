@@ -1,6 +1,6 @@
 (in-package :wu)
 
-(publish :path "/hello"
+(publish :path "/"
 	 :function #'(lambda (req ent)
 		       (with-http-response-and-body (req ent)
 			 (html

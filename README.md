@@ -21,7 +21,7 @@ cd /tmp/build
 ./bin/compile /tmp/build /tmp/cache
 
 Run:
+mv /tmp/cache /tmp/was-cache 
 cd /tmp/build
-export CCL_DEFAULT_DIRECTORY=ccl
 setup/launch -b -l setup/run.lisp
 

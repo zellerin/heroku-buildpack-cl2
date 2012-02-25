@@ -16,7 +16,7 @@
 (defvar *quicklisp-home* 
   (append (or *cache-dir* *app-dir*)  '("quicklisp")))
 
-(defvar asdf::*user-cache* (append *quicklisp-home* '(".cache" "common-lisp" :implementation)))
+(setq asdf::*user-cache* (append *quicklisp-home* '(".cache" "common-lisp" :implementation)))
 
 (if (probe-file (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
     (progn 
