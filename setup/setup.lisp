@@ -16,7 +16,8 @@
 (defvar *quicklisp-home* 
   (append (or *cache-dir* *app-dir*)  '("quicklisp")))
 
-(setq asdf::*user-cache* (append *quicklisp-home* '(".cache" "common-lisp" :implementation)))
+;;; Extraordinary hard to get this right, still not sure it is.  :root ought to work, but doesn't.
+(setq asdf::*user-cache* (cons #P"/" (append (cdr *quicklisp-home*) '(".cache" "common-lisp" :implementation))))
 
 (if (probe-file (make-pathname :directory *quicklisp-home* :defaults "setup.lisp"))
     (progn 
