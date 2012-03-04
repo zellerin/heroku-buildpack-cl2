@@ -10,5 +10,5 @@ config_vars:
   PATH: bin:/usr/bin:/bin
   CCL_DEFAULT_DIRECTORY: ccl
 default_process_types:
-  web: setup/launch -b -l setup/run.lisp
+  web: lispapp
 EOF
