@@ -11,16 +11,15 @@
 (require :asdf)
 (load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
 
-;;; Not needed?
-;(defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
+(defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
 
 ;(load (make-pathname :defaults *load-pathname* :name "setup"))
 
 (asdf:clear-system "acl-compat")
 
-(load (make-pathname :directory (append *app-dir* '("repos" "portableaserve" "acl-compat"))
+(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "acl-compat"))
 		     :defaults "acl-compat.asd"))
-(load (make-pathname :directory (append *app-dir* '("repos" "portableaserve" "aserve"))
+(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "aserve"))
 		     :defaults "aserve.asd"))
 
 (load (make-pathname :directory *app-dir* :name *app-name* :type "asd"))
