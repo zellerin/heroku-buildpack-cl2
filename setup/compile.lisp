@@ -10,8 +10,13 @@
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
 
 (require :asdf)
-(load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
-(quicklisp-quickstart:install :path  (make-pathname :directory (append *cache-dir* '("quicklisp"))))
+(let ((ql-setup (make-pathname :directory (append *cache-dir* '("quicklisp")) :defaults "setup.lisp")))
+  (if (probe-file ql-setup)
+      (load ql-setup)
+      (progn
+	(load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
+	(funcall (symbol-function (find-symbol "INSTALL" (find-package "QUICKLISP-QUICKSTART")))
+		 :path (make-pathname :directory (pathname-directory ql-setup))))))
 
 ;(load (make-pathname :defaults *load-pathname* :name "setup"))
 
@@ -26,14 +31,16 @@
 
 (ql:quickload *app-name*)
 
+;;; +++ Belongs elsewhere, also needs to be extensible...
+(defun heroku-toplevel ()
+  (let ((port (parse-integer (getenv "PORT"))))
+    (format t "Listening on port ~A~%" port)
+    (net.aserve:start :port port)
+    (loop (sleep 60))			;sleep forever
+    ))
+
 (save-application
  (make-pathname :directory (getenv "BUILD_DIR") :name "lispapp")
  :prepend-kernel t
  :toplevel-function #'heroku-toplevel
  )
-
-;;; +++ Belongs elsewhere, also needs to be extensible...
-(defun heroku-toplevel ()
-  (let ((port (parse-integer (getenv "PORT"))))
-    (format t "~%Listening on port ~A" port)
-    (net.aserve:start :port port)))
