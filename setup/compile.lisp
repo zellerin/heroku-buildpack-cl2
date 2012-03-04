@@ -40,7 +40,7 @@
     ))
 
 (save-application
- (format nil "~A/bin/lispapp") (getenv "BUILD_DIR") ;must match path specified in bin/release
+ (format nil "~A/bin/lispapp" (getenv "BUILD_DIR")) ;must match path specified in bin/release
  :prepend-kernel t
  :toplevel-function #'heroku-toplevel
  )
