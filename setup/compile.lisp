@@ -11,7 +11,7 @@
 
 (require :asdf)
 (load (make-pathname :directory (append *app-dir* '("lib")) :defaults "quicklisp.lisp"))
-
+(quicklisp-quickstart:install :path  (make-pathname :directory (append *cache-dir* '("quicklisp"))))
 
 ;(load (make-pathname :defaults *load-pathname* :name "setup"))
 
