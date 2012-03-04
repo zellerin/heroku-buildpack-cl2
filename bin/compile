@@ -58,21 +58,7 @@ else
 fi
 
 export CACHE_DIR
-
-# add to slug 
-cp -r $CACHE_DIR/repos $BUILD_DIR/repos 
-
-echo "-----> Installing dependencies with quicklisp"
-
-# run lisp to load quicklisp packages
-
-export CACHE_DIR
+export BUILD_DIR
 export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 $CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILD_DIR/setup/compile.lisp"
 
-echo "dependencies installed" | indent
-  
-# copy quicklisp to slug
-if [ -d $CACHE_DIR/quicklisp ]; then
-    cp -r $CACHE_DIR/quicklisp $BUILD_DIR/quicklisp
-fi
