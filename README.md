@@ -5,9 +5,7 @@ Attempt at a buildpack for Common Lisp (using OpenMCL). Work in progress.
 
 TODO
 - fucking git line ending problems PKM!
-- detect is wrong
-- need to define app structure (distinct from buildpack)
-
+- cache does not retain quicklisp downloads; probably they are going to wrong place
 
 TESTING locally
 
