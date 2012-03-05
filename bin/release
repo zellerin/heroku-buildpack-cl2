@@ -7,8 +7,8 @@ cat << EOF
 addons:
   - shared-database:5mb
 config_vars:
-  PATH: $1:/usr/bin:/bin
+  PATH: .:/usr/bin:/bin
   CCL_DEFAULT_DIRECTORY: ccl
 default_process_types:
-  web: lispapp
+  web: $1/lispapp
 EOF
