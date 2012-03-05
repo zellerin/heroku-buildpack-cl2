@@ -1,6 +1,6 @@
 (in-package :cl-user)
 
-(defvar *app-dir* (butlast (pathname-directory *load-pathname*)))
+(defvar *build-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILD_DIR") "/"))))
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILDPACK_DIR") "/"))))
 
@@ -30,7 +30,7 @@
     ))
 
 ;;; This loads the application
-(load (make-pathname :directory *app-dir* :defaults "heroku-setup.lisp"))
+(load (make-pathname :directory *build-dir* :defaults "heroku-setup.lisp"))
 
 (save-application
  (format nil "~A/bin/lispapp" (getenv "BUILD_DIR")) ;must match path specified in bin/release
