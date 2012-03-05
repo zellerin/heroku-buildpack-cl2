@@ -15,10 +15,12 @@ function indent() {
   esac
 }
 
+# 
 S3_BUCKET="cl-heroku"
 CCL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
 
 # parse and derive params
+BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
 
@@ -44,10 +46,6 @@ echo "-----> Getting patched versions of libraries"
 # get patched aserve
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
     pushd $CACHE_DIR/repos/portableaserve
-# not sure why I am getting errors here -- added explicit remote/branch
-#    echo "-->DEBUG ls aserve dir "
-#    pwd
-#    ls -la
     git pull origin master
     popd
 else 
@@ -57,8 +55,11 @@ else
     popd
 fi
 
+export BUILDPACK_DIR
 export CACHE_DIR
 export BUILD_DIR
 export CCL_DEFAULT_DIRECTORY=$CCL_DIR
-$CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILD_DIR/setup/compile.lisp"
 
+echo "-----> "Starting build"
+$CCL_DEFAULT_DIRECTORY/scripts/ccl64 -l "$BUILDPACK_DIR/setup/compile.lisp"
+echo "-----> "Build finished"
