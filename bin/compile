@@ -45,9 +45,10 @@ echo "ccl installed" | indent
 echo "-----> Getting patched versions of libraries"
 # get patched aserve
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
-    pushd $CACHE_DIR/repos/portableaserve
-    git pull origin master
-    popd
+     echo 'aserve already present'
+#    pushd $CACHE_DIR/repos/portableaserve
+#    git pull origin master
+#    popd
 else 
     mkdir $CACHE_DIR/repos
     pushd $CACHE_DIR/repos
