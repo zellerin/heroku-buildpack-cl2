@@ -24,7 +24,8 @@
 (defun heroku-toplevel ()
   (let ((port (parse-integer (getenv "PORT"))))
     (format t "Listening on port ~A~%" port)
-    (net.aserve:start :port port)
+    (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE")))
+	     :port port)
     (loop (sleep 60))			;sleep forever
     ))
 
