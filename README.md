@@ -1,25 +1,27 @@
-Heroku buildpack: CL
+Heroku Buildpack for Common Lisp
 =======================
 
-Attempt at a buildpack for Common Lisp (using OpenMCL). Work in progress.
+A Buildpack that allows you to deploy Common Lisp applications on the Heroku infrastructure.
 
-TODO
-- fucking git line ending problems PKM!
+STATUS:
+- Working to first approximation.
+- For a minimal example of use, see https://github.com/mtravers/heroku-cl-example
+- For a more complex example, see https://github.com/mtravers/wuwei
+
+CREDITS
+- Heroku and their new Buildpack-capable stack http://devcenter.heroku.com/articles/buildpacks
+- QuickLisp library manager http://www.quicklisp.org/
+- OpenMCL aka Clozure CL http://trac.clozure.com/ccl
+- Portable AllegroServe http://portableaserve.sourceforge.net/
+
+TODO:
 - cache does not retain quicklisp downloads; probably they are going to wrong place
+- need to work on app structure,
+  and copying over static files
+- parameterizing/forking for other Lisp implementations and web servers
+- support for Heroku's database infrastructure
 
-TESTING locally
+Mike Travers, mt@hyperphor.com
 
-Compile:
-rm -rf /tmp/build
-git clone -l . /tmp/build
-rm -rf /tmp/cache
-mkdir /tmp/cache
-ln -s /misc/repos/ccl /tmp/cache/ccl
-cd /tmp/build
-./bin/compile /tmp/build /tmp/cache
 
-Run:
-mv /tmp/cache /tmp/was-cache 
-cd /tmp/build
-setup/launch -b -l setup/run.lisp
 
