@@ -32,8 +32,9 @@
 ;;; This loads the application
 (load (make-pathname :directory *build-dir* :defaults "heroku-setup.lisp"))
 
-(save-application
- (format nil "~A/lispapp" (getenv "BUILD_DIR")) ;must match path specified in bin/release
- :prepend-kernel t
- :toplevel-function #'heroku-toplevel
- )
+(let ((app-file (format nil "~A/lispapp" (getenv "BUILD_DIR")))) ;must match path specified in bin/release
+  (format t "Saving to ~A~%" appfile)
+  (save-application appfile
+		    :prepend-kernel t
+		    :toplevel-function #'heroku-toplevel
+		    ))
