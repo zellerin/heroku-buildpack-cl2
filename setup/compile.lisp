@@ -3,6 +3,8 @@
 (defvar *build-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILD_DIR") "/"))))
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILDPACK_DIR") "/"))))
+;;; we shouldn't need this, but in fact we do.  I have a ticket open with Heroku
+(defvar *app-dir* (pathname-directory (pathname "/app/")))
 
 (require :asdf)
 (let ((ql-setup (make-pathname :directory (append *cache-dir* '("quicklisp")) :defaults "setup.lisp")))
