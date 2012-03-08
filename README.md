@@ -12,7 +12,6 @@ A Buildpack that allows you to deploy Common Lisp applications on the Heroku inf
 * The scripts bin/test-compile and bin/test-run simulate as far as possible the Heroku build and run environments on your local machine.
 
 ## Todos
-* cache does not retain quicklisp downloads; probably they are going to wrong place.
 * parameterizing/forking for other Lisp implementations and web servers.
 * support for Heroku's database infrastructure.
 
