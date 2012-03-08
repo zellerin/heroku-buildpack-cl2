@@ -4,11 +4,10 @@
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILDPACK_DIR") "/"))))
 
-(require :asdf)
+;;; Tell ASDF to store binaries in the cache dir
+(ccl:setenv "XDG_CACHE_HOME" (concatenate 'string (getenv "CACHE_DIR") "/.asdf/"))
 
-;;; FUCK this doesn't work
-;(setq asdf::*user-cache* (append *cache-dir* '("asdf" "common-lisp" :implementation)))
-;(setq asdf::*user-cache* (cons :root (append (cdr *cache-dir*) '("asdf" "common-lisp" :implementation))))
+(require :asdf)
 
 (let ((ql-setup (make-pathname :directory (append *cache-dir* '("quicklisp")) :defaults "setup.lisp")))
   (if (probe-file ql-setup)
