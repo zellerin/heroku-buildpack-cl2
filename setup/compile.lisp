@@ -5,7 +5,10 @@
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (getenv "BUILDPACK_DIR") "/"))))
 
 (require :asdf)
-(setq asdf::*user-cache* (append *cache-dir* '("asdf" "common-lisp" :implementation)))
+
+;;; FUCK this doesn't work
+;(setq asdf::*user-cache* (append *cache-dir* '("asdf" "common-lisp" :implementation)))
+;(setq asdf::*user-cache* (cons :root (append (cdr *cache-dir*) '("asdf" "common-lisp" :implementation))))
 
 (let ((ql-setup (make-pathname :directory (append *cache-dir* '("quicklisp")) :defaults "setup.lisp")))
   (if (probe-file ql-setup)

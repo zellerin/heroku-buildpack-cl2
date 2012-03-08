@@ -29,7 +29,6 @@ CCL_DIR="$CACHE_DIR/ccl"
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
 echo "-----> Installing ccl"
-# don't we only want to do this if not there?
 if [ ! -d $CCL_DIR ]; then
     echo "-----> Fetching ccl"
     mkdir -p $CCL_DIR  && curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CCL_DIR
@@ -46,6 +45,7 @@ echo "-----> Getting patched versions of libraries"
 # get patched aserve
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
      echo 'aserve already present'
+# this was having difficulties, so let's not bother updating
 #    pushd $CACHE_DIR/repos/portableaserve
 #    git pull origin master
 #    popd
