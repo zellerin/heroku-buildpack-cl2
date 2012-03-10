@@ -24,8 +24,13 @@
 (load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "aserve"))
 		     :defaults "aserve.asd"))
 
-;;; Default toplevel, app can redefine if necessary
+;;; App can redefine this to do runtime initializations
+(defun initialize-application ()
+  )
+
+;;; Default toplevel, app can redefine 
 (defun heroku-toplevel ()
+  (initialize-application)
   (let ((port (parse-integer (getenv "PORT"))))
     (format t "Listening on port ~A~%" port)
     (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE")))
