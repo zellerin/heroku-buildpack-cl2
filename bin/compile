@@ -39,8 +39,8 @@ cp -r $CCL_DIR $BUILD_DIR
 
 echo "ccl installed" | indent
 
-# TEMP reset the cache -- no easy way to do this as far as I can tell
-rm -rf $CACHE_DIR/repos
+# uncomment temporarily to reset the cache -- no easy way to do this as far as I can tell
+# rm -rf $CACHE_DIR/repos
 
 # setting up paths for building
 
