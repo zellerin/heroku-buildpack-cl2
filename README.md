@@ -6,7 +6,7 @@ A Buildpack that allows you to deploy Common Lisp applications on the Heroku inf
 ## Status
 * Working to first approximation.
 * For a minimal example of use, see [the example application](https://github.com/mtravers/heroku-cl-example).
-* For a more complex example, see [the WuWei demo site](http://warm-sky-3012.herokuapp.com/) and [source](https://github.com/mtravers/wuwei).
+* For a more complex example, see [the WuWei demo site](http://wuwei.name/) and [source](https://github.com/mtravers/wuwei).
 
 ## Notes
 * The scripts bin/test-compile and bin/test-run simulate as far as possible the Heroku build and run environments on your local machine.
