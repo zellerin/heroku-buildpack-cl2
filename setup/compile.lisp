@@ -22,7 +22,7 @@
 ;;; Load all .asd files in the repos subdirectory.  The compile script puts
 ;;; several systems in there, because we are using versions that are 
 ;;; different from those in Quicklisp. 
-(mapc #'load (directory (make-pathname :directory (append *cache-dir* '("repos") :wild-inferiors)
+(mapc #'load (directory (make-pathname :directory (append *cache-dir* '("repos" :wild-inferiors))
 				       :name :wild
 				       :type "asd")))
 
