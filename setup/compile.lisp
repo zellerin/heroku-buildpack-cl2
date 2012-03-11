@@ -19,18 +19,21 @@
 
 (asdf:clear-system "acl-compat")
 
-(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "acl-compat"))
-		     :defaults "acl-compat.asd"))
-(load (make-pathname :directory (append *cache-dir* '("repos" "portableaserve" "aserve"))
-		     :defaults "aserve.asd"))
+;;; Load all .asd files in the repos subdirectory.  The compile script puts
+;;; several systems in there, because we are using versions that are 
+;;; different from those in Quicklisp. 
+(mapc #'load (directory (make-pathname :directory (append *cache-dir* '("repos") :wild-inferiors)
+				       :name :wild
+				       :type "asd")))
 
 ;;; App can redefine this to do runtime initializations
 (defun initialize-application ()
   )
 
-;;; Default toplevel, app can redefine 
+;;; Default toplevel, app can redefine.
 (defun heroku-toplevel ()
   (initialize-application)
+  ;; Start the web server
   (let ((port (parse-integer (getenv "PORT"))))
     (format t "Listening on port ~A~%" port)
     (funcall (symbol-function (find-symbol "START" (find-package "NET.ASERVE")))
@@ -38,9 +41,10 @@
     (loop (sleep 60))			;sleep forever
     ))
 
-;;; This loads the application
+;;; Load the application from sources
 (load (make-pathname :directory *build-dir* :defaults "heroku-setup.lisp"))
 
+;;; Save the application as an image
 (let ((app-file (format nil "~A/lispapp" (getenv "BUILD_DIR")))) ;must match path specified in bin/release
   (format t "Saving to ~A~%" app-file)
   (save-application app-file
