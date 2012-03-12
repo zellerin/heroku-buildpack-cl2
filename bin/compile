@@ -24,6 +24,11 @@ BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+if [-d $BUILD_DIR/reset-cache ]; then
+  echo "-----> flushing cache"
+  rm -rf $CACHE_DIR/*
+fi
+
 CCL_DIR="$CACHE_DIR/ccl"
 
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
@@ -38,9 +43,6 @@ fi
 cp -r $CCL_DIR $BUILD_DIR
 
 echo "ccl installed" | indent
-
-# uncomment temporarily to reset the cache -- no easy way to do this as far as I can tell
-# rm -rf $CACHE_DIR/repos
 
 # setting up paths for building
 
