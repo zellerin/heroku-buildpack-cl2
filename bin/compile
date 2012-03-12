@@ -24,14 +24,15 @@ BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
+echo "***test***"
+
 if [ -d $BUILD_DIR/reset-cache ]; then
   echo "-----> flushing cache"
   rm -rf $CACHE_DIR/*
 fi
 
 CCL_DIR="$CACHE_DIR/ccl"
-
-echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
 echo "-----> Installing ccl"
 if [ ! -d $CCL_DIR ]; then
