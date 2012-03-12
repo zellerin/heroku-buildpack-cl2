@@ -40,29 +40,34 @@ cp -r $CCL_DIR $BUILD_DIR
 echo "ccl installed" | indent
 
 # uncomment temporarily to reset the cache -- no easy way to do this as far as I can tell
-rm -rf $CACHE_DIR/repos
+# rm -rf $CACHE_DIR/repos
 
 # setting up paths for building
 
 echo "-----> Getting patched versions of libraries"
 
+mkdir $CACHE_DIR/repos		# should be under an if to avoid error
+pushd $CACHE_DIR/repos
+
 if [ -d $CACHE_DIR/repos/portableaserve ]; then
      echo 'aserve already present'
+     pushd portableaserve
+     git pull origin master
+     popd
 else 
-    mkdir $CACHE_DIR/repos
-    pushd $CACHE_DIR/repos
     git clone git://github.com/mtravers/portableaserve.git
-    popd
 fi
 
 if [ -d $CACHE_DIR/repos/wuwei ]; then
      echo 'wuwei already present'
+     pushd wuwei
+     git pull origin master
+     popd
 else 
-    mkdir $CACHE_DIR/repos
-    pushd $CACHE_DIR/repos
     git clone git://github.com/mtravers/wuwei.git
-    popd
 fi
+
+popd
 
 export BUILDPACK_DIR
 export CACHE_DIR
