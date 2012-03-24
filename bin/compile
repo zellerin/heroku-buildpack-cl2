@@ -48,8 +48,6 @@ echo "ccl installed" | indent
 
 echo "-----> Getting patched versions of libraries"
 
-export				# debug
-
 mkdir $CACHE_DIR/repos		# should be under an if to avoid error
 pushd $CACHE_DIR/repos
 
@@ -68,7 +66,7 @@ if [ -d $CACHE_DIR/repos/wuwei ]; then
      git pull origin master
      popd
 else 
-    git -v clone git://github.com/mtravers/wuwei.git
+    git clone git://github.com/mtravers/wuwei.git
 fi
 
 popd
