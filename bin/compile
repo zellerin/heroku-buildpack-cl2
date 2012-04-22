@@ -26,7 +26,7 @@ CACHE_DIR=$2
 
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
-if [ -e $BUILD_DIR/reset-cache ]; then
+if [ $RESET_CACHE ]; then
   echo "-----> flushing cache"
   rm -rf $CACHE_DIR/*
 fi
