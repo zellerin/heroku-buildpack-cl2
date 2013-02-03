@@ -8,6 +8,9 @@
 
 (format t "XDG_CACHE_HOME: ~A~%" (asdf:getenv "XDG_CACHE_HOME"))
 
+(load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
+(add-asdf-output-translation *build-dir* (merge-pathnames "fasl/" *build-dir*))
+
 (let ((ql-setup (make-pathname :directory (append *build-dir* '("quicklisp")) :defaults "setup.lisp")))
   (if (probe-file ql-setup)
       (load ql-setup)

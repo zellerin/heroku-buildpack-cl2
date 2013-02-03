@@ -60,6 +60,8 @@ fi
 cp -r $SBCL_DIR $BUILD_DIR
 echo "sbcl installed" | indent
 
+cp $BUILDPACK_DIR/bin/buildpack-utils.lisp $BUILD_DIR
+
 # setting up paths for building
 
 export BUILDPACK_DIR
