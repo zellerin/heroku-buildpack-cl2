@@ -7,10 +7,14 @@
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/"))))
 
+(defparameter *fasl-dir* (merge-pathnames "fasl/" *build-dir2*))
+
 (format t "XDG_CACHE_HOME: ~A~%" (asdf:getenv "XDG_CACHE_HOME"))
+(format t "*fasl-dir*: ~A~%" *fasl-dir*)
 
 (load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
-(add-asdf-output-translation *build-dir2* (merge-pathnames "fasl/" *build-dir2*))
+
+(add-asdf-output-translation *build-dir2* *fasl-dir*)
 
 (let ((ql-setup (make-pathname :directory (append *build-dir* '("quicklisp")) :defaults "setup.lisp")))
   (if (probe-file ql-setup)
