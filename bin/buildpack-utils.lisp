@@ -49,7 +49,6 @@
                             :version (pathname-version child))))
     (let ((orig-asdf-apply-output-translations #'asdf:apply-output-translations))
       (asdf::defun* asdf:apply-output-translations (path)
-        (format t "asdf:apply-output-translations: ~A~%" path)
         (if (child-path-p source-dir path)
             (merge-pathnames (rel-path source-dir path) output-dir)
             (funcall orig-asdf-apply-output-translations path))))))
