@@ -34,6 +34,8 @@ fi
 
 CCL_DIR="$CACHE_DIR/ccl"
 
+rm -r $CCL_DIR
+
 echo "-----> Installing ccl"
 if [ ! -d $CCL_DIR ]; then
     echo "-----> Fetching ccl"
