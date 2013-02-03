@@ -4,11 +4,7 @@
 
 cat << EOF
 ---
-addons:
-  - shared-database:5mb
 config_vars:
   PATH: /usr/bin:/bin
   CCL_DEFAULT_DIRECTORY: ccl
-default_process_types:
-  web: ./lispapp
 EOF
