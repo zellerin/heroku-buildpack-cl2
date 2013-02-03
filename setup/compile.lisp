@@ -6,6 +6,8 @@
 (defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/"))))
 (defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/"))))
 
+(format t "XDG_CACHE_HOME: ~A~%" (asdf:getenv "XDG_CACHE_HOME"))
+
 (let ((ql-setup (make-pathname :directory (append *build-dir* '("quicklisp")) :defaults "setup.lisp")))
   (if (probe-file ql-setup)
       (load ql-setup)
