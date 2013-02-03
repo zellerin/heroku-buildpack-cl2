@@ -70,6 +70,6 @@ export BUILD_DIR
 export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 
 echo "-----> Starting build"
-XDG_CACHE_HOME="$BUILD_DIR/.asdf/" #$CCL_DEFAULT_DIRECTORY/scripts/ccl64 --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(ccl:quit)"
-XDG_CACHE_HOME="$BUILD_DIR/.asdf/" $CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(sb-ext:quit)"
+#XDG_CACHE_HOME="$BUILD_DIR/.asdf/" $CCL_DEFAULT_DIRECTORY/scripts/ccl64 --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(ccl:quit)"
+$CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(sb-ext:quit)"
 echo "-----> Build finished"
