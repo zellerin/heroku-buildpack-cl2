@@ -29,12 +29,6 @@
 (defmacro with-ql-test-context (() &body body)
   `(call-with-ql-test-context #'(lambda () ,@body)))
 
-(defparameter *fasl-dir* (merge-pathnames "fasl/" *build-dir2*))
-(format t "*build-dir*: ~A~%" *build-dir*)
-(format t "*fasl-dir*: ~A~%" *fasl-dir*)
-(load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
-(add-asdf-output-translation *build-dir2* *fasl-dir*)
-
 (with-ql-test-context ()
   (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *build-dir2*)))
     (format t "ql-setup: ~A~%" ql-setup)
@@ -45,6 +39,10 @@
     (funcall (read-from-string "quicklisp-quickstart:install")
             :path (make-pathname :directory (pathname-directory ql-setup)))))))
 
+(defparameter *fasl-dir* (merge-pathnames "fasl/" *build-dir2*))
+(format t "*build-dir*: ~A~%" *build-dir*)
+(format t "*fasl-dir*: ~A~%" *fasl-dir*)
+(load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
 (add-asdf-output-translation *build-dir2* *fasl-dir*)
 
 ;;; Load the application from sources
