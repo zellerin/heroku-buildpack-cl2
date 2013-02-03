@@ -35,10 +35,6 @@ fi
 CCL_DIR="$CACHE_DIR/ccl"
 SBCL_DIR="$CACHE_DIR/sbcl"
 
-#temporary
-rm -rf $CCL_DIR
-rm -rf $SBCL_DIR
-
 echo "-----> Installing ccl"
 if [ ! -d $CCL_DIR ]; then
     echo "-----> Fetching ccl"    
