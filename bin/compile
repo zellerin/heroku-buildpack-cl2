@@ -33,8 +33,11 @@ if [ $RESET_CACHE ]; then
 fi
 
 CCL_DIR="$CACHE_DIR/ccl"
+SBCL_DIR="$CACHE_DIR/sbcl"
 
+#temporary
 rm -rf $CCL_DIR
+rm -rf $SBCL_DIR
 
 echo "-----> Installing ccl"
 if [ ! -d $CCL_DIR ]; then
@@ -46,6 +49,15 @@ fi
 cp -r $CCL_DIR $BUILD_DIR
 
 echo "ccl installed" | indent
+
+if [ ! -d $CCL_DIR ]; then
+    echo "-----> Fetching sbcl"    
+    SBCL_PACKAGE="http://sbcl-heroku.s3.amazonaws.com/sbcl-1.0.54-x86-64-linux-binary.tar.bz2"
+    curl $SBCL_PACKAGE -s -o -  | tar xjf - -C $SBCL_DIR
+fi
+# add to slug 
+cp -r $SBCL_DIR $BUILD_DIR
+echo "sbcl installed" | indent
 
 # setting up paths for building
 
