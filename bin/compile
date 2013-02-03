@@ -50,7 +50,7 @@ cp -r $CCL_DIR $BUILD_DIR
 
 echo "ccl installed" | indent
 
-if [ ! -d $CCL_DIR ]; then
+if [ ! -d $SBCL_DIR ]; then
     echo "-----> Fetching sbcl"    
     SBCL_PACKAGE="http://sbcl-heroku.s3.amazonaws.com/sbcl-1.0.54-x86-64-linux-binary.tar.bz2"
     mkdir $SBCL_DIR && curl $SBCL_PACKAGE -s -o -  | tar xjf - -C $SBCL_DIR
