@@ -15,11 +15,6 @@ function indent() {
   esac
 }
 
-# 
-S3_BUCKET="cl-heroku"
-CCL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
-CCL_PACKAGE=ftp://ftp.clozure.com/pub/release/1.8/ccl-1.8-linuxx86.tar.gz
-
 # parse and derive params
 BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
@@ -32,38 +27,39 @@ if [ $RESET_CACHE ]; then
   rm -rf $CACHE_DIR/*
 fi
 
-CCL_DIR="$CACHE_DIR/ccl"
-SBCL_DIR="$CACHE_DIR/sbcl"
+# 
+#S3_BUCKET="cl-heroku"
+#CCL_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/ccl-1.7.tgz"
+#CCL_PACKAGE=ftp://ftp.clozure.com/pub/release/1.8/ccl-1.8-linuxx86.tar.gz
+#
+#CCL_DIR="$CACHE_DIR/ccl"
+#
+##echo "-----> Installing ccl"
+#if [ ! -d $CCL_DIR ]; then
+#    echo "-----> Fetching ccl"    
+#    curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CACHE_DIR
+#fi
+#
+## add to slug 
+#cp -r $CCL_DIR $BUILD_DIR
+#
+#echo "ccl installed" | indent
 
-echo "-----> Installing ccl"
-if [ ! -d $CCL_DIR ]; then
-    echo "-----> Fetching ccl"    
-    curl $CCL_PACKAGE -s -o -  | tar xzf - -C $CACHE_DIR
-fi
-
-# add to slug 
-cp -r $CCL_DIR $BUILD_DIR
-
-echo "ccl installed" | indent
-
-if [ ! -d $SBCL_DIR ]; then
+if [ ! -d "$CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux" ]; then
     echo "-----> Fetching sbcl"    
     SBCL_PACKAGE="http://sbcl-heroku.s3.amazonaws.com/sbcl-1.0.54-x86-64-linux-binary.tar.bz2"
-    mkdir $SBCL_DIR && curl $SBCL_PACKAGE -s -o -  | tar xjf - -C $SBCL_DIR
-    chmod +x $SBCL_DIR/sbcl-1.0.54-x86-64-linux/run-sbcl.sh
+    mkdir "$CACHE_DIR/sbcl" && curl $SBCL_PACKAGE -s -o -  | tar xjf - -C "$CACHE_DIR/sbcl"
+    chmod +x "$CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux/run-sbcl.sh"
 fi
 # add to slug 
-cp -r $SBCL_DIR $BUILD_DIR
+cp -r "$CACHE_DIR/sbcl" $BUILD_DIR
 echo "sbcl installed" | indent
-
-cp $BUILDPACK_DIR/bin/buildpack-utils.lisp $BUILD_DIR
 
 # setting up paths for building
 
 export BUILDPACK_DIR
 export CACHE_DIR
 export BUILD_DIR
-export CCL_DEFAULT_DIRECTORY=$CCL_DIR
 
 echo "-----> Starting build"
 #XDG_CACHE_HOME="$BUILD_DIR/.asdf/" $CCL_DEFAULT_DIRECTORY/scripts/ccl64 --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(ccl:quit)"
