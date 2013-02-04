@@ -38,7 +38,7 @@ In the Procfile command you also want to disable ASDF output translations.
 
 Disabling ASDF output tranlastions is necessary becuse Heroku performs the `compile`
 step on one machine/directory, and then copies the result into another machine/directory.
-The default ASDF output translations caches .fasl files according to the full path
+The default ASDF output translations cache .fasl files according to the full path
 of their source files. When the sources are moved to another location, ASDF can not match them
 to the cached .fasls.
 
