@@ -9,7 +9,7 @@ Differences from the Mike's buildpack:
   of your application.
 * Doesn't force your application to be saved into a lisp image at Heroku.
   We recommend the build output to consist of full application and libraries sources
-  together with prebuild .fasl files to speedup loading. You can build lisp image,
+  together with prebuild .fasl files to speedup loading. You can build a lisp image,
   but often this will lead to problems. For example, many libraries keep static files
   (e.g css, javascript) in their repositories and access the files using
  `asdf:system-relative-pathname`. If lisp image is saved and copied to another
