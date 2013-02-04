@@ -7,12 +7,12 @@ Differences from the Mike's buildpack:
 * Doesn't install patched portableaserve and wuwei. You are free to use any webserver.
   If you need a version not available in quicklisp, you can fetch it as a git submodule
   of your application.
-* Doesn't force you to deploy the application as a lisp image. 
-  We recommend to deploy libraries together with sources; and prebuild
-  .fasl files to speedup loading. While lisp image may be appropriate sometimes,
-  often it won't work. For example, many libraries keep static files (e.g css, javascript)
+* Doesn't deploy your application as a lisp image. We recommend the application
+  and libraries be deployed together with sources; and prebuild .fasl files to
+  speedup loading. While lisp image may be appropriate sometimes, often it won't work.
+  For example, many libraries keep static files (e.g css, javascript)
   in their repositories and access the files using `asdf:system-relative-pathname`.
-  If we save a lisp image and deploy it to another location (as Heroku does),
+  If lisp image is saved and copied to another location (as it happens at Heroku),
   those libraries will not find their static files.
 
 ## Usage
