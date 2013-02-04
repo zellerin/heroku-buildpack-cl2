@@ -40,7 +40,7 @@ Disabling ASDF output tranlastions is necessary becuse Heroku performs the `comp
 step on one machine/directory, and then copies the result into another machine/directory.
 The default ASDF output translations cache .fasl files according to the full path
 of their source files. When the sources are moved to another location, ASDF can not match them
-to the cached .fasls.
+to the cached .fasls. In result full recompilation will hapen at start time of your application.
 
 With ASDF output translations disabled the .fasl files are placed near the sources,
 and when copied together, ASDF still matches them.
