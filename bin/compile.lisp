@@ -2,13 +2,21 @@
 
 (require :asdf)
 
-(defvar *build-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "BUILD_DIR") "/"))))
-(defvar *build-dir2* (truename (concatenate 'string (asdf::getenv "BUILD_DIR") "/")))
-(defvar *cache-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/"))))
-(defvar *buildpack-dir* (pathname-directory (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/"))))
+(defvar *build-dir* (pathname (concatenate 'string (asdf::getenv "BUILD_DIR") "/")))
+(defvar *cache-dir* (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/")))
+(defvar *buildpack-dir2* (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/")))
 
-(asdf:disable-output-translations)
+(defun require-quicklisp ()
+  (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *build-dir*)))
+    (if (probe-file ql-setup)
+        (load ql-setup)
+        (progn
+          (load (merge-pathnames "bin/quicklisp.lisp" *buildpack-dir*))
+          (funcall (read-from-string "quicklisp-quickstart:install")
+                   :path (make-pathname :directory (pathname-directory ql-setup)))))))
 
+;;; stacktrace printing, copy/pasted from the ql-test by Fare:
+;;; ssh://common-lisp.net/home/frideau/git/ql-test.git
 (defun print-backtrace (out)
   "Print a backtrace (implementation-defined)"
   (declare (ignorable out))
@@ -31,21 +39,6 @@
 (defmacro with-ql-test-context (() &body body)
   `(call-with-ql-test-context #'(lambda () ,@body)))
 
-(with-ql-test-context ()
-  (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *build-dir2*)))
-    (format t "ql-setup: ~A~%" ql-setup)
-    (if (probe-file ql-setup)
-        (load ql-setup)
-        (progn
-    (load (make-pathname :directory (append *buildpack-dir* '("bin")) :defaults "quicklisp.lisp"))
-    (funcall (read-from-string "quicklisp-quickstart:install")
-            :path (make-pathname :directory (pathname-directory ql-setup)))))))
-
-;(defparameter *fasl-dir* (merge-pathnames "fasl/" *build-dir2*))
-;(format t "*build-dir*: ~A~%" *build-dir*)
-;(format t "*fasl-dir*: ~A~%" *fasl-dir*)
-;(load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
-;(add-asdf-output-translation *build-dir2* *fasl-dir*)
-
 ;;; Load the application compile script
-(load (make-pathname :directory *build-dir* :defaults "heroku-compile.lisp"))
+(with-ql-test-context ()
+  (load (merge-pathnames "heroku-compile.lisp" *build-dir*)))
