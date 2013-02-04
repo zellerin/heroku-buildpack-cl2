@@ -47,7 +47,5 @@
 ;(load (make-pathname :directory *build-dir* :defaults "buildpack-utils.lisp"))
 ;(add-asdf-output-translation *build-dir2* *fasl-dir*)
 
-;;; Load the application from sources
-(with-ql-test-context ()
-  (load (make-pathname :directory *build-dir* :defaults "heroku-setup.lisp"))
-  (heroku-compile))
+;;; Load the application compile script
+(load (make-pathname :directory *build-dir* :defaults "heroku-compile.lisp"))
