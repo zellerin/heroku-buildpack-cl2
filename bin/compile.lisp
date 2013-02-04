@@ -4,7 +4,7 @@
 
 (defvar *build-dir* (pathname (concatenate 'string (asdf::getenv "BUILD_DIR") "/")))
 (defvar *cache-dir* (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/")))
-(defvar *buildpack-dir2* (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/")))
+(defvar *buildpack-dir* (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/")))
 
 (defun require-quicklisp ()
   (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *build-dir*)))
