@@ -12,8 +12,8 @@ Differences from the Mike's buildpack:
   .fasl files to speedup loading. While lisp image may be appropriate sometimes,
   often it won't work. For example, many libraries keep static files (e.g css, javascript)
   in their repositories and access the files using `asdf:system-relative-pathname`.
-  If we save a lisp image and deploy it to another location, those libraries will not
-  find their static files.
+  If we save a lisp image and deploy it to another location (as Heroku does),
+  those libraries will not find their static files.
 
 ## Usage
 To feel comfortable, read about Heroku [Procfile](https://devcenter.heroku.com/articles/procfile)
