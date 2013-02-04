@@ -18,7 +18,7 @@ Differences from the Mike's buildpack:
 ## Usage
 To feel comfortable, read about Heroku [Procfile](https://devcenter.heroku.com/articles/procfile)
 and [Buildpack](https://devcenter.heroku.com/articles/buildpack-api). You will then understand,
-that Heroku allow you to use any unix command to start your application. And buildpack
+that Heroku allows you to use any unix command to start your application. And buildpack
 provides a separate `compile` step, where you can prepare things for that command: fetch
 the lisp implementation binary, download libraries with quicklisp and build .fasl files. Again, 
 using full power of unix.
@@ -29,7 +29,7 @@ and then invokes a _heroku-compile.lisp_ script in your application root directo
 In your _heroku-compile.lisp_ you typically want to prebuild .fasl files of your
 application by first `(asdf:disable-output-translations)` and then loading your ASDF system.
 
-If you need Quicklisp, call `cl-user::require-quicklisp', it installs quicklisp in the 
+If you need Quicklisp, call `cl-user::require-quicklisp`, it installs quicklisp in the 
 directory _quicklisp/_.
 
 Your application is started according to what you specfy in your Procfile.
@@ -39,8 +39,8 @@ In the Procfile command you also want to disable ASDF output translations.
 Disabling ASDF output tranlastions is necessary becuse Heroku performs the `compile`
 step on one machine/directory, and then copies the result into another machine/directory.
 The default ASDF output translations caches .fasl files according to the full path
-of their source files. When the sources to another location, ASDF can not match them
-to cached .fasls.
+of their source files. When the sources are moved to another location, ASDF can not match them
+to the cached .fasls.
 
 With ASDF output translations disabled the .fasl files are placed near the sources,
 and when copied together, ASDF still matches them.
