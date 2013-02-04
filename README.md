@@ -8,7 +8,7 @@ Differences from the Mike's buildpack:
   And if you need a version not available in quicklisp, you can fetch as a git submodule
   of your application.
 * Doesn't force you to deploy the application as a lisp image. 
-  Instead we suggest to deploy libraries together with sources; and prebuild
+  We recommend to deploy libraries together with sources; and prebuild
   .faslf files to speedup loading. While lisp image may be appropriate sometimes,
   often it won't work. For example, many libraries keep static files (e.g css, javascript)
   in their repositories and access the files using `asdf:system-relative-pathname`.
