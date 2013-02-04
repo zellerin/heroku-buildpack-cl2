@@ -7,13 +7,14 @@ Differences from the Mike's buildpack:
 * Doesn't install patched portableaserve and wuwei. You are free to use any webserver.
   If you need a version not available in quicklisp, you can fetch it as a git submodule
   of your application.
-* Doesn't force your application to be built into a lisp image at Heroku.
-  We recommend the application and libraries to be deployed together with sources;
-  and prebuild .fasl files to speedup loading. While lisp image may be appropriate sometimes,
-  often it won't work. For example, many libraries keep static files (e.g css, javascript)
-  in their repositories and access the files using `asdf:system-relative-pathname`.
-  If lisp image is saved and copied to another location (as it happens with build results
-  at Heroku), those libraries will not find their static files.
+* Doesn't force your application to be built into a saved lisp image at Heroku.
+  We recommend the build output to consist of full application and libraries sources
+  together with prebuild .fasl files to speedup loading. You can build lisp image,
+  but often this will lead to problems. For example, many libraries keep static files
+  (e.g css, javascript) in their repositories and access the files using
+ `asdf:system-relative-pathname`. If lisp image is saved and copied to another
+  location (as it happens with build results at Heroku), those libraries will
+  not find their static files.
 
 ## Usage
 To feel comfortable, read about Heroku [Procfile](https://devcenter.heroku.com/articles/procfile)
