@@ -57,7 +57,7 @@ See the [example application](https://github.com/avodonosov/heroku-cl-example2).
 
 ## Credits
 * [Mike Travers](hyperphor.com) for his great example
-* [Jose Santos Martins Pereira](https://github.com/jsmpereira/heroku-buildpack-cl) for hosting SBCL compiler and example of how to deploy it to heroku.
+* [Jose Santos Martins Pereira](https://github.com/jsmpereira/heroku-buildpack-cl) for hosting SBCL binary tarball at S3 and example of how to deploy it to heroku.
 * Heroku and their new [Buildpack-capable stack](http://devcenter.heroku.com/articles/buildpacks)
 * [QuickLisp](http://www.quicklisp.org/) library manager 
 * All other countless lispers and developers of all generations who made this possible.
