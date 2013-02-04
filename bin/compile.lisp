@@ -37,7 +37,7 @@
     (if (probe-file ql-setup)
         (load ql-setup)
         (progn
-    (load (make-pathname :directory (append *buildpack-dir* '("lib")) :defaults "quicklisp.lisp"))
+    (load (make-pathname :directory (append *buildpack-dir* '("bin")) :defaults "quicklisp.lisp"))
     (funcall (read-from-string "quicklisp-quickstart:install")
             :path (make-pathname :directory (pathname-directory ql-setup)))))))
 
