@@ -13,6 +13,7 @@ function indent() {
 BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
+SBCL_VERSION=1.4.4
 
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
@@ -21,11 +22,11 @@ if [ $RESET_CACHE ]; then
   rm -rf $CACHE_DIR/*
 fi
 
-if [ ! -d "$CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux" ]; then
+if [ ! -d "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux" ]; then
     echo "-----> Fetching sbcl"    
-    SBCL_PACKAGE="http://sbcl-heroku.s3.amazonaws.com/sbcl-1.0.54-x86-64-linux-binary.tar.bz2"
+    SBCL_PACKAGE="http://prdownloads.sourceforge.net/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux-binary.tar.bz2"
     mkdir -p "$CACHE_DIR/sbcl" && curl $SBCL_PACKAGE -s -o -  | tar xjf - -C "$CACHE_DIR/sbcl"
-    chmod +x "$CACHE_DIR/sbcl/sbcl-1.0.54-x86-64-linux/run-sbcl.sh"
+    chmod +x "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh"
 fi
 # add to slug 
 cp -r "$CACHE_DIR/sbcl" $BUILD_DIR
@@ -38,5 +39,5 @@ export CACHE_DIR
 export BUILD_DIR
 
 echo "-----> Starting build"
-$BUILD_DIR/sbcl/sbcl-1.0.54-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(sb-ext:quit)"
+$BUILD_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(sb-ext:quit)"
 echo "-----> Build finished"
