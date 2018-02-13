@@ -25,7 +25,7 @@ fi
 if [ ! -d "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux" ]; then
     echo "-----> Fetching sbcl"    
     SBCL_PACKAGE="http://prdownloads.sourceforge.net/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux-binary.tar.bz2"
-    mkdir -p "$CACHE_DIR/sbcl" && curl $SBCL_PACKAGE -s -o -  | tar xjf - -C "$CACHE_DIR/sbcl"
+    mkdir -p "$CACHE_DIR/sbcl" && wget $SBCL_PACKAGE -O -  | tar xjf - -C "$CACHE_DIR/sbcl"
     chmod +x "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh"
 fi
 # add to slug 
