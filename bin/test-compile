@@ -5,10 +5,12 @@
 # See also bin/test-run
 
 # run in app repository directory (eg ~/repos/heroku-cl-example/)
+TOPPATH=$(readlink -f $(dirname $0))
 
 rm -rf /tmp/build
-# git clone -l . /tmp/build
-hg clone . /tmp/build
+install -d /tmp/build
+git clone -l . /tmp/build --no-local
+#hg clone . /tmp/build
 
 # comment out this section to reuse the cache
 # rm -rf /tmp/cache
@@ -16,4 +18,4 @@ hg clone . /tmp/build
 # ln -s /misc/repos/ccl /tmp/cache/ccl
 
 cd /tmp/build
-~/repos/heroku-buildpack-cl/bin/compile /tmp/build /tmp/cache
+$TOPPATH/compile /tmp/build /tmp/cache

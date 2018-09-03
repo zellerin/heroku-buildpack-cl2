@@ -37,6 +37,7 @@ echo "sbcl installed" | indent
 export BUILDPACK_DIR
 export CACHE_DIR
 export BUILD_DIR
+export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/fasl"
 
 echo "-----> Starting build"
 $BUILD_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp" --eval "(sb-ext:quit)"

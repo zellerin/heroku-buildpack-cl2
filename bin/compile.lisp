@@ -17,7 +17,9 @@
         (progn
           (load (merge-pathnames "bin/quicklisp.lisp" *buildpack-dir*))
           (fncall "quicklisp-quickstart:install"
-                   :path (make-pathname :directory (pathname-directory ql-setup)))))
+                  :path (make-pathname :directory
+				       (namestring
+					(merge-pathnames "quicklisp" *cache-dir*))))))
     (when version
       (fncall "ql-dist:install-dist"
               (format nil "http://beta.quicklisp.org/dist/quicklisp/~A/distinfo.txt"
@@ -32,12 +34,13 @@
     (handler-bind (((or error serious-condition)
                      (lambda (c)
                        (format *error-output* "~%~A~%" c)
-                       (format *error-output* "~%~A~%" c)
                        (return nil))))
       (funcall thunk))))
 
 (defmacro with-ql-test-context (() &body body)
   `(call-with-ql-test-context #'(lambda () ,@body)))
+
+(require-quicklisp)
 
 ;;; Load the application compile script
 (with-ql-test-context ()
