@@ -19,3 +19,4 @@ git clone -l . /tmp/build --no-local
 
 cd /tmp/build
 $TOPPATH/compile /tmp/build /tmp/cache
+/home/heroku/heroku/bin/heroku local

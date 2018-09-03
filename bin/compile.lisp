@@ -11,7 +11,7 @@
 
 (defun require-quicklisp (&key version)
   "VERSION if specified must be in format YYYY-MM-DD"
-  (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *build-dir*)))
+  (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *cache-dir*)))
     (if (probe-file ql-setup)
         (load ql-setup)
         (progn
@@ -45,3 +45,5 @@
 ;;; Load the application compile script
 (with-ql-test-context ()
   (load (merge-pathnames "heroku-compile.lisp" *build-dir*)))
+
+(save-lisp-and-die (merge-pathnames "base.core" *build-dir*))
