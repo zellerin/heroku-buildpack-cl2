@@ -13,7 +13,7 @@ function indent() {
 BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
-SBCL_VERSION=1.4.4
+SBCL_VERSION=1.4.11
 
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
@@ -37,7 +37,7 @@ echo "sbcl installed" | indent
 export BUILDPACK_DIR
 export CACHE_DIR
 export BUILD_DIR
-export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/fasl"
+export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/$SBCL_VERSION"
 
 echo "-----> Starting build"
 $BUILD_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --load "$BUILDPACK_DIR/bin/compile.lisp"
