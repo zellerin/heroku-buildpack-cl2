@@ -29,7 +29,6 @@ if [ ! -d "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux" ]; then
     chmod +x "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh"
 fi
 # add to slug 
-cp -r "$CACHE_DIR/sbcl" $BUILD_DIR
 echo "sbcl installed" | indent
 
 # setting up paths for building
@@ -40,6 +39,6 @@ export BUILD_DIR
 export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/$SBCL_VERSION"
 
 echo "-----> Starting build"
-$BUILD_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --no-sysinit --no-userinit --load "$BUILDPACK_DIR/bin/compile.lisp"
-rm $BUILD_DIR/sbcl/sbcl-*/output/sbcl.core
+$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --no-sysinit --no-userinit --load "$BUILDPACK_DIR/bin/compile.lisp"
+cp -p $CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/src/runtime/sbcl ${BUILD_DIR}/
 echo "-----> Build finished"
