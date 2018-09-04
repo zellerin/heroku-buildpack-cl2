@@ -12,14 +12,14 @@
 (defun require-quicklisp (&key version)
   "VERSION if specified must be in format YYYY-MM-DD"
   (let ((ql-setup (merge-pathnames "quicklisp/setup.lisp" *cache-dir*)))
-    (if (probe-file ql-setup)
+    (if (print (probe-file (print ql-setup)))
         (load ql-setup)
         (progn
           (load (merge-pathnames "bin/quicklisp.lisp" *buildpack-dir*))
           (fncall "quicklisp-quickstart:install"
                   :path (make-pathname :directory
 				       (namestring
-					(merge-pathnames "quicklisp" *cache-dir*))))))
+					(merge-pathnames "quicklisp/" *cache-dir*))))))
     (when version
       (fncall "ql-dist:install-dist"
               (format nil "http://beta.quicklisp.org/dist/quicklisp/~A/distinfo.txt"
