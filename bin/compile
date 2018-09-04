@@ -8,12 +8,11 @@ function indent() {
     *)      sed -u "$c";;
   esac
 }
-
 # parse and derive params
 BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
 BUILD_DIR=$1
 CACHE_DIR=$2
-SBCL_VERSION=1.4.11
+SBCL_VERSION=${SBCL_VERSION:-1.4.11}
 
 echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
 
