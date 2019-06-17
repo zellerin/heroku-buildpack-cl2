@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
+# Download default or provided version of sbcl if not to the cache
+# Use it to load compile.lisp that should dump the application image to the build dir.
+# Copy the sbcl binary to the build dir.
+
 function indent() {
   c='s/^/       /'
   case $(uname) in
@@ -8,36 +12,27 @@ function indent() {
     *)      sed -u "$c";;
   esac
 }
-# parse and derive params
-BUILDPACK_DIR=$(cd $(dirname $0); cd ..; pwd) # absolute path of buildpack
-BUILD_DIR=$1
-CACHE_DIR=$2
-SBCL_VERSION=${SBCL_VERSION:-1.4.11}
 
-echo "-----> compile params: $BUILD_DIR $CACHE_DIR"
+set -ex
+export BUILDPACK_BIN=$(dirname $0) # absolute path of buildpack bin directory
+export BUILD_DIR=${1:?Missing build dir}
+export CACHE_DIR=${2:?Missing cache dir}
+export SBCL_VERSION=${SBCL_VERSION:-1.5.3}
+export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/$SBCL_VERSION"
+SBCL_PATH="$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux"
 
-if [ $RESET_CACHE ]; then
-  echo "-----> flushing cache"
+if [[ -n "$RESET_CACHE" ]]; then
   rm -rf $CACHE_DIR/*
 fi
 
-if [ ! -d "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux" ]; then
+if [ ! -d "$SBCL_PATH" ]; then
     echo "-----> Fetching sbcl"
     SBCL_PACKAGE="http://prdownloads.sourceforge.net/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux-binary.tar.bz2"
     mkdir -p "$CACHE_DIR/sbcl" && wget $SBCL_PACKAGE -O -  | tar xjf - -C "$CACHE_DIR/sbcl"
-    chmod +x "$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh"
+    chmod +x "$SBCL_PATH/run-sbcl.sh"
 fi
-# add to slug 
-echo "sbcl installed" | indent
-
-# setting up paths for building
-
-export BUILDPACK_DIR
-export CACHE_DIR
-export BUILD_DIR
-export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/$SBCL_VERSION"
-
+# add to slug
 echo "-----> Starting build"
-$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --no-sysinit --no-userinit --load "$BUILDPACK_DIR/bin/compile.lisp"
+$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/run-sbcl.sh --no-sysinit --no-userinit --load "$BUILDPACK_BIN/compile.lisp"
 cp -p $CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux/src/runtime/sbcl ${BUILD_DIR}/
 echo "-----> Build finished"

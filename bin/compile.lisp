@@ -2,9 +2,11 @@
 
 (require :asdf)
 
-(defvar *build-dir* (pathname (concatenate 'string (asdf::getenv "BUILD_DIR") "/")))
-(defvar *cache-dir* (pathname (concatenate 'string (asdf::getenv "CACHE_DIR") "/")))
-(defvar *buildpack-dir* (pathname (concatenate 'string (asdf::getenv "BUILDPACK_DIR") "/")))
+(flet ((path-from-env (path)
+	 (pathname (concatenate 'string (asdf::getenv path) "/"))))
+  (defvar *build-dir* (path-from-env "BUILD_DIR"))
+  (defvar *cache-dir* (path-from-env "CACHE_DIR"))
+  (defvar *buildpack-bin* (path-from-env "BUILDPACK_BIN")))
 
 (defmacro fncall (funname &rest args)
   `(funcall (read-from-string ,funname) ,@args))
@@ -15,7 +17,7 @@
     (if (print (probe-file (print ql-setup)))
         (load ql-setup)
         (progn
-          (load (merge-pathnames "bin/quicklisp.lisp" *buildpack-dir*))
+          (load (merge-pathnames "quicklisp.lisp" *buildpack-bin*))
           (fncall "quicklisp-quickstart:install"
                   :path (make-pathname :directory
 				       (namestring
@@ -43,7 +45,8 @@
 (require-quicklisp)
 
 ;;; Load the application compile script
+(setq *default-pathname-defaults* *build-dir*)
 (with-ql-test-context ()
-  (load (merge-pathnames "heroku-compile.lisp" *build-dir*)))
+  (load "heroku-compile.lisp"))
 
-(save-lisp-and-die (merge-pathnames "base.core" *build-dir*))
+(save-lisp-and-die (merge-pathnames "base.core"))
