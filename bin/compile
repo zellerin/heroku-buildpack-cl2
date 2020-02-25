@@ -17,12 +17,19 @@ set -ex
 export BUILDPACK_BIN=$(dirname $0) # absolute path of buildpack bin directory
 export BUILD_DIR=${1:?Missing build dir}
 export CACHE_DIR=${2:?Missing cache dir}
-export SBCL_VERSION=${SBCL_VERSION:-1.5.3}
+export SBCL_VERSION=${SBCL_VERSION:-1.5.5}
 export ASDF_OUTPUT_TRANSLATIONS="/:$CACHE_DIR/$SBCL_VERSION"
 SBCL_PATH="$CACHE_DIR/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux"
 
 if [[ -n "$RESET_CACHE" ]]; then
   rm -rf $CACHE_DIR/*
+fi
+
+LPDIR="$CACHE_DIR/quicklisp/local-projects"
+if [[ ! -d "$LPDIR/pax-like-doc" ]]
+then
+    install -d "$LPDIR"
+    git clone https://github.com/zellerin/pax-like-doc.git "$LPDIR/pax-like-doc"
 fi
 
 if [ ! -d "$SBCL_PATH" ]; then
