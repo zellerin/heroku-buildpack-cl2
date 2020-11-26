@@ -7,10 +7,9 @@
 # run in app repository directory (eg ~/repos/heroku-cl-example/)
 TOPPATH=$(readlink -f $(dirname $0))
 
-rm -rf /tmp/build
-install -d /tmp/build
-git clone -l . /tmp/build --no-local
-#hg clone . /tmp/build
+rm -rf /tmp/build-ws
+install -d /tmp/build-ws
+git clone -l . /tmp/build-ws --no-local
 
 # comment out this section to reuse the cache
 # rm -rf /tmp/cache
@@ -19,4 +18,3 @@ git clone -l . /tmp/build --no-local
 
 cd /tmp/build
 $TOPPATH/compile /tmp/build /tmp/cache
-/home/heroku/heroku/bin/heroku local
