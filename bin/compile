@@ -23,13 +23,6 @@ if [[ -v RESET_CACHE ]]; then
   rm -rf $CACHE_DIR/*
 fi
 
-LPDIR="$CACHE_DIR/quicklisp/local-projects"
-if [[ ! -d "$LPDIR/pax-like-doc" ]]
-then
-    install -d "$LPDIR"
-    git clone https://github.com/zellerin/pax-like-doc.git "$LPDIR/pax-like-doc"
-fi
-
 if [ ! -d "$SBCL_PATH" ]; then
     echo "-----> Fetching sbcl"
     SBCL_PACKAGE="http://prdownloads.sourceforge.net/sbcl/sbcl-${SBCL_VERSION}-x86-64-linux-binary.tar.bz2"
