@@ -26,8 +26,6 @@
                       version)
               :replace t :prompt nil))))
 
-(require-quicklisp)
-
 ;;; Load the application compile script
 (setq *default-pathname-defaults* *build-dir*)
 (handler-case
