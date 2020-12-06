@@ -5,21 +5,28 @@ My rework of rework by Avodonosov of the Common Lisp buildpack for Heroku [by Mi
 Some differences from the two (actually, the combination of buildpack and app s
 - Accepts SBCL_VERSION variable during build time to set SBCL version
 - Simplified for my workflow
-** What it does
+-
+** What the buildpack does
 
-The compile shell script basically:
-- Get SBCL version from env directory (on Heroku) or environment (locally) ir default
-- Download sbcl
-- run sbcl on compile.lisp
+The [[./bin/detect][detect]] script just checks that the heroku-compile.lisp file is
+present in the application (see later).
 
-The compile.lisp then:
-- defines =(require-quicklisp)= to load quicklisp; application can
-  require particular release of it
-- loads heroku-compile from application
+The [[./bin/compile][compile]] script effectively compiles image named base.core from the
+heroku-compile.lisp provided by the application. Specifically, it:
+- gets SBCL version identifier from env directory (on Heroku) or
+  environment (locally) - or default that is not changed too often
+- downloads sbcl from sourceforge
+- runs sbcl on compile.lisp
+
+The [[./bin/compile.lisp][compile.lisp]] then:
+- defines =(cl-user::require-quicklisp)= to load quicklisp; application
+  can require particular release of quicklisp by providing appropriate
+  parameter.
+- loads heroku-compile from application.
 - saves image in "base.core".
 
-** How should image look like
-- have heroku-compile.lisp. It can look like
+** What application needs to provide
+- heroku-compile.lisp to compile the application. It can look like
   #+begin_src emacs-lisp
     ;; SSL is not needed on Heroku, may be desirable locally
     (require 'sb-posix)
@@ -34,11 +41,12 @@ The compile.lisp then:
     (ql:quickload 'app)
 #+end_src
 
-- Have Procfile that loads base.core and starts application
+- Procfile that loads base.core and starts application
 : web: ./sbcl --noinform --core ./base.core --no-userinit --no-sysinit --load init.lisp
 
-** How to test/use it locally
-On local machine, I rebuild the image with
+** How to test/use package locally
+On local machine, I symlink buildpack directory to the application
+root and rebuild the image within Emacs:
 #+begin_src emacs-lisp
   (defun heroku-rebuild ()
     (interactive)
@@ -52,7 +60,7 @@ On local machine, I rebuild the image with
 		  "/var/cache/heroku" "env/")))
 #+end_src
 
-and then run the image with
+Compiled image can be started with
 #+begin_src emacs-lisp
     (defun heroku-run (&optional ask-port port)
       (interactive "p")
